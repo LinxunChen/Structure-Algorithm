@@ -1,5 +1,3 @@
-*.s*
-*.vc*
 */debug/*
 */release/*
 */ipch/*

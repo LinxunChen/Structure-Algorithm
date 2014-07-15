@@ -98,7 +98,6 @@ node *inverse(node *head) {
 }
 
 void printList(node *head) {
-	int i;
 	node *p;
 	p = head->next;
 	do{
@@ -110,9 +109,9 @@ void printList(node *head) {
 void main() {
 	node *head = creat();
 	//head = del(head, 4);
-	head = insert(head, 5, 105);
-	head = sort(head);
-	head = inverse(head);
+	//head = insert(head, 5, 105);
+	//head = sort(head);
+	//head = inverse(head);
 	printList(head);
 }
 
