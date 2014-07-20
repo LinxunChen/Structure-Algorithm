@@ -17,6 +17,7 @@ jnode *creatCirList(int n) {
 	p = head;
 	for (int i = 2; i <= n; i++) {		
 		s = (jnode *)malloc(sizeof(jnode));
+		s->data = i;
 		p->next = s;
 		p = s;
 	}
@@ -27,6 +28,7 @@ jnode *creatCirList(int n) {
 jnode *insert(jnode *head, int content) {
 	jnode *p, *s;
 	p = head;
+	
 	while (p->next != NULL) {
 		p = p->next;
 	}
@@ -38,17 +40,18 @@ jnode *insert(jnode *head, int content) {
 }
 
 void JosephRing(int n, int k, int m) {
-	jnode *p, *s;
+	jnode *p, *s, *point;
 	int count = 1;
 	jnode *headRing = creatCirList(n);
 	jnode *headList = (jnode *)malloc(sizeof(jnode));
+	headList->next = NULL;
 	p = headRing;
 	while (p->data != k) {
 		p = p->next;
 	}	
 	s = p;
 
-	while (p != NULL) {
+	while (p->next != p) {
 		while (count != m) {
 			s = p;
 			p = p->next;
@@ -60,9 +63,13 @@ void JosephRing(int n, int k, int m) {
 		p = s->next;
 		count = 1;
 	}
+	headList = insert(headList, p->data);
+	free(p);
 	
+	point = headList->next;
 	for (int i = 1; i <= n; i++) {
-		printf("%d,", headList->data);
+		printf("%d ", point->data);
+		point = point->next;
 	}
 }
 
