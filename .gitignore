@@ -1,5 +1,5 @@
 *.s*
 *.vc*
-*/debug/*
-*/release/*
-*/ipch/*
+debug/
+release/
+ipch/
