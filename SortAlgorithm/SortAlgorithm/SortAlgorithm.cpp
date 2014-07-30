@@ -5,8 +5,6 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-/*从小到大进行排序*/
-
 void BubbleSort(int a[], int len) {
 	for (int i = 1; i < len; i++) {			//从左往右
 		for (int j = len-1; j >=i ; j--) {	//从右往左
