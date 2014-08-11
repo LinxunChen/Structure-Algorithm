@@ -102,6 +102,27 @@ void QuickSort(int a[], int start, int end) {		//Ñ¡ÔñÐòÁÐ¿ªÍ·Îª»ù×¼£¬½«ÁÐ±í·ÖÎª×
 	}
 }
 
+void ShellSort(int a[], int len) {
+	int gap, i, j;
+
+	for (gap = len / 2; gap > 0; gap /= 2) {
+		for (i = 0; i < gap; i++) {
+			for (j = i + gap; j < len; j += gap) {
+				int temp = a[j];
+				int k = j - gap;
+
+				while (a[k] > temp && k >= 0) {
+					a[k + gap] = a[k];
+					k -= gap;
+				}
+				a[k + gap] = temp;
+			}
+		}
+	}
+}
+
+
+
 void main() {
 	int a[5];
 
@@ -112,7 +133,8 @@ void main() {
 	//BubbleSort(a, 5);
 	//InsertionSort(a, 5);
 	//MergeSort(a, 0, 4);
-	QuickSort(a, 0, 4);
+	//QuickSort(a, 0, 4);
+	ShellSort(a, 5);
 
 	for (int i = 0; i < 5; i++) {
 		printf("%d ", a[i]);
