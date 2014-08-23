@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include <stdio.h>
 #include<stdlib.h>
-#include<queue>
 
 #define MAX 100
 #define FALSE 0
@@ -14,6 +13,70 @@ typedef struct {
 	int arc[MAX][MAX];
 	int numVex, numEdge;
 }MGraph;
+
+typedef struct N {
+	int data;
+	struct N *next;
+}Node;
+
+typedef struct Q {
+	Node *head=NULL, *tail=NULL;
+}Queue;
+
+void push(Queue *Q, int num) {
+	if (Q == NULL) {
+		return;
+	}
+
+	Node *nd = (Node *)malloc(sizeof(Node));
+	nd->data = num;
+	nd->next = NULL;
+
+	if (Q->head == NULL) {//队列为空
+		Q->head = nd;
+		Q->tail = nd;
+	}
+	else{//队列非空
+		Q->tail->next = nd;
+		Q->tail = nd;
+	}
+}
+
+int pop(Queue *Q) {
+	if (Q == NULL) {//异常
+		return -1;
+	}
+	if (Q->head == NULL) {//队列空了
+		printf("queue is empty");
+		return -1;
+	}
+	if (Q->head->next == NULL) {//队列只有1个元素
+		int temp = Q->head->data;
+		free(Q->head);
+		Q->head = NULL;
+		Q->tail = NULL;
+		return temp;
+	}
+	else{//队列至少2个元素
+		int temp = Q->head->data;
+		Node *p = Q->head;
+		Q->head = Q->head->next;
+		free(p);
+		return temp;
+	}
+}
+
+int empty(Queue *Q) {
+	if (Q == NULL) {
+		return -1;
+	}
+	if (Q->head == NULL) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
 
 void creatMGraph(MGraph *G) {
 	printf("please enter numVex and numEdge\n");
@@ -60,6 +123,10 @@ void DFSTransvel(MGraph G) {
 }
 
 void BFS(MGraph G) {
+	Queue *queue = (Queue *)malloc(sizeof(Queue));
+	queue->head = NULL; 
+	queue->tail = NULL;
+
 	for (int i = 0; i < G.numVex; i++) {
 		visited[i] = FALSE;
 	}
@@ -68,9 +135,18 @@ void BFS(MGraph G) {
 		if (!visited[i]){
 			visited[i] = TRUE;
 			printf("%d", i);
+			push(queue, i);
 
-			queue<int> Q;
-
+			while (!empty(queue)) {
+				int j = pop(queue);
+				for (int k = 0; k < G.numVex; k++) {
+					if (!visited[k] && G.arc[j][k] == 1) {
+						visited[k] = TRUE;
+						printf("%d", k);
+						push(queue, k);
+					}
+				}
+			}
 		}
 	}
 }
