@@ -30,7 +30,7 @@ void PreOrderTraverse(BiNode head) {
 		return;
 	}
 	else{
-		printf("%c", head->data);
+		printf("%d", head->data);
 		PreOrderTraverse(head->left);
 		PreOrderTraverse(head->right);
 	}
@@ -62,7 +62,33 @@ void TransToLinkedList(BiNode pNode) {
 	TransRecursively(pNode, &previous, &current);
 }
 
+BiNode Constrcut(int *pre, int *in, int len) {
+	if (pre == NULL || in == NULL || len <= 0) {
+		return NULL;
+	}
+
+	int lenLeft = 0;
+	int *p = in;
+
+	while (*pre != *p && lenLeft <= len) {
+		p++;
+		lenLeft++;
+		if (lenLeft > len) {
+			return NULL;
+		}
+	}
+
+	int lenRight = len - lenLeft - 1;
+	BiNode root = (BiNode)malloc(sizeof(Node));
+	root->data = *pre;
+	root->left = Constrcut(pre + 1, in, lenLeft);
+	root->right = Constrcut(pre + lenLeft + 1, in + lenLeft + 1, lenRight);
+
+	return root;
+}
+
 void main(){
+	/*
 	BiNode tree = (BiNode)malloc(sizeof(Node));
 	CreatBiTree(&tree);
 	PreOrderTraverse(tree);
@@ -74,5 +100,10 @@ void main(){
 	while(tree) {
 		printf("%c", tree->data);
 		tree = tree->next;
-	}
+	}*/
+
+	int a[] = { 1, 2, 4, 7, 3, 5, 6, 8 };
+	int b[] = { 4, 7, 2, 1, 5, 3, 8, 6 };
+	BiNode p = Constrcut(a, b, 8);
+	PreOrderTraverse(p);
 }

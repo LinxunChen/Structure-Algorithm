@@ -61,6 +61,7 @@ node *insert(node *head, int content, int insertCont) {
 	return head;
 }
 
+/*
 node *sort(node *head) {
 	node *p, *s, *flag;
 	int temp;
@@ -77,6 +78,32 @@ node *sort(node *head) {
 			s = s->next;
 		}
 		flag = s;
+	}
+	return head;
+}
+*/
+
+void swap(node*a, node *b) {
+	int temp = a->data;
+	a->data = b->data;
+	b->data = temp;
+}
+
+node *sort(node *head) {
+	node *p, *q;
+	p = head;
+
+	while (p->next != NULL) {
+		node *min = p;
+		q = p;
+		while (q->next != NULL) {
+			if (min->data > q->next->data) {
+				min = q->next;
+			}
+			q = q->next;
+		}
+		swap(p, min);
+		p = p->next;
 	}
 	return head;
 }
@@ -109,8 +136,8 @@ void printList(node *head) {
 void main() {
 	node *head = creat();
 	//head = del(head, 4);
-	//head = insert(head, 5, 105);
-	//head = sort(head);
+	head = insert(head, 5, 105);
+	head = sort(head);
 	//head = inverse(head);
 	printList(head);
 }
